@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#12bdf5">
   <title>Curio Club Web Game</title>
-  <style>html,body{margin:0;min-height:100%;background:#11b8ef;font-family:system-ui,sans-serif;color:#fff}body{display:grid;place-items:center}.loading{text-align:center;font-weight:800}.spin{font-size:52px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-10px)}}</style>
+  <style>html,body{margin:0;min-height:100%;background:#11b8ef;font-family:system-ui,sans-serif;color:#fff}body{display:grid;place-items:center}.loading{text-align:center;font-weight:900;padding:24px}.spin{font-size:60px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-10px)}}</style>
 </head>
 <body>
-  <div class="loading"><div class="spin">🔎</div><p>Loading Curio Club…</p></div>
+  <div class="loading"><div class="spin">🧡</div><p>Loading…</p></div>
   <script>
   (async()=>{
-    const files=['bundle/part1.txt','bundle/part2.txt','bundle/part3.txt','bundle/part4.txt'];
+    const files=['bundle/g2-01.b64','bundle/g2-02.b64','bundle/g2-03.b64'];
     const parts=await Promise.all(files.map(async file=>{
       const response=await fetch(file,{cache:'no-store'});
       if(!response.ok) throw new Error(`Failed to load ${file}: ${response.status}`);
       return response.text();
     }));
+    const binary=atob(parts.join('').replace(/\s+/g,''));
+    const bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+    if(!('DecompressionStream' in window)) throw new Error('This browser needs a newer version.');
+    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    const html=await new Response(stream).text();
     document.open();
-    document.write(parts.join(''));
+    document.write(html);
     document.close();
   })().catch(error=>{
     document.body.innerHTML=`<div class="loading"><h1>Could not load the game</h1><p>${error.message}</p></div>`;
