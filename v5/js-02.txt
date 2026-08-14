@@ -1,0 +1,40 @@
+['🧤 قفاز','🧢 قبعة','🧣 وشاح'],1),q('الجو بارد','❄️',['🧥 معطف','👕 قميص خفيف','🩱 ملابس سباحة'],0)]},
+{id:'healthy',cat:'life',icon:'🥗',title:'طعام صحي',sub:'اختر الصحي',mode:'quiz',rounds:[q('اختر طعامًا صحيًا','🍎',['🍎','🍭','🍩'],0),q('اختر خضارًا','🥕',['🍪','🥕','🍫'],1),q('اختر فاكهة','🍌',['🍟','🍌','🍬'],1)]},
+{id:'lunch',cat:'life',icon:'🍱',title:'جهز الغداء',sub:'اختر 3 أشياء',mode:'sort',items:[['🍎','الغداء'],['🥪','الغداء'],['💧','الغداء'],['🧸','ليس غداء'],['⚽','ليس غداء'],['🖍️','ليس غداء']],bins:['الغداء','ليس غداء']},
+{id:'hands',cat:'life',icon:'🧼',title:'غسل اليدين',sub:'رتب الخطوات',mode:'sequence',steps:['💧 بلل اليدين','🧼 ضع الصابون','🙌 افرك جيدًا','🚿 اشطف','🧻 جفف']},
+{id:'tidy',cat:'life',icon:'🧸',title:'رتب الألعاب',sub:'ضع كل شيء مكانه',mode:'sort',items:[['🧸','صندوق اللعب'],['🚗','صندوق اللعب'],['🧱','صندوق اللعب'],['🍌','المطبخ'],['🥄','المطبخ'],['🍎','المطبخ']],bins:['صندوق اللعب','المطبخ']},
+{id:'pet',cat:'life',icon:'🐶',title:'اعتنِ بالحيوان',sub:'أكل وماء',mode:'quiz',rounds:[q('الكلب جائع','🐶',['🦴 طعام','🧼 صابون','🧱 طوبة'],0),q('القط عطشان','🐱',['💧 ماء','🎈 بالون','✏️ قلم'],0),q('الحيوان متسخ','🐶',['🫧 تنظيف','🍭 حلوى','🔨 مطرقة'],0)]},
+{id:'recycle',cat:'life',icon:'♻️',title:'إعادة التدوير',sub:'فرز الأشياء',mode:'sort',items:[['📰','إعادة تدوير'],['🥫','إعادة تدوير'],['📦','إعادة تدوير'],['🍌','نفايات'],['🍎','نفايات'],['🥪','نفايات']],bins:['إعادة تدوير','نفايات']},
+{id:'ingredients',cat:'life',icon:'🔎',title:'ابحث عن المكونات',sub:'أشياء مخفية',mode:'hidden',targets:['🍅','🧀','🥕','🥚','🍞']},
+{id:'bridge',cat:'engineering',icon:'🌉',title:'ابنِ جسرًا',sub:'ضع القطع',mode:'build'},
+{id:'vehicles',cat:'engineering',icon:'🚗',title:'المركبات',sub:'أرض وبحر وسماء',mode:'sort',items:[['🚗','الأرض'],['🚌','الأرض'],['✈️','السماء'],['🚁','السماء'],['🚤','البحر'],['⛵','البحر']],bins:['الأرض','السماء','البحر']},
+{id:'robot',cat:'tech',icon:'🤖',title:'صمم روبوت',sub:'اختر الشكل',mode:'robot'},
+{id:'coding',cat:'tech',icon:'➡️',title:'برمجة بسيطة',sub:'وصل الروبوت للنجمة',mode:'coding'},
+{id:'music',cat:'music',icon:'🎹',title:'اصنع موسيقى',sub:'اضغط النغمات',mode:'music'},
+{id:'rhythm',cat:'music',icon:'🥁',title:'الإيقاع',sub:'كرر الأصوات',mode:'rhythm'},
+{id:'paint',cat:'music',icon:'🖍️',title:'التلوين',sub:'ارسم بحرية',mode:'paint'},
+{id:'stickers',cat:'music',icon:'✨',title:'ملصقات',sub:'زين الصورة',mode:'stickers'},
+{id:'feelings',cat:'sel',icon:'😊',title:'المشاعر',sub:'كيف يشعر؟',mode:'quiz',rounds:[q('أي وجه سعيد؟','😊',['😊','😢','😠'],0),q('أي وجه حزين؟','😢',['😠','😢','😊'],1),q('أي وجه غاضب؟','😠',['😊','😠','😴'],1)]},
+{id:'kindness',cat:'sel',icon:'🤝',title:'اللطف والمشاركة',sub:'ماذا نفعل؟',mode:'quiz',rounds:[q('صديقك يريد اللعب','🧸',['نشارك معه 🤝','نخفي اللعبة 🙈'],0),q('صديقك وقع','😢',['نساعده ❤️','نضحك عليه'],0),q('أحد قال لك شكرًا','🙏',['نقول عفوًا 😊','نصرخ'],0)]},
+{id:'yoga',cat:'move',icon:'🧘',title:'حركات هادئة',sub:'تحرك معي',mode:'movement',moves:[['🌳','قف مثل الشجرة'],['🐱','تمدد مثل القطة'],['⭐','افتح ذراعيك مثل النجمة']]},
+{id:'dance',cat:'move',icon:'💃',title:'ارقص وتوقف',sub:'تحرك ثم توقف',mode:'movement',moves:[['💃','ارقص!'],['🧊','توقف!'],['🕺','ارقص!']]},
+{id:'treasure',cat:'world',icon:'🗺️',title:'خريطة الكنز',sub:'اتبع العلامات',mode:'coding',treasure:true},
+{id:'world',cat:'world',icon:'🌍',title:'حول العالم',sub:'بحر جبل صحراء',mode:'quiz',rounds:[q('أين الجبل؟','⛰️',['⛰️','🌊','🏜️'],0),q('أين البحر؟','🌊',['🏜️','🌊','🌋'],1),q('أين الصحراء؟','🏜️',['🌲','🏜️','❄️'],1)]},
+{id:'pop',cat:'basics',icon:'🎈',title:'فرقع البالونات',sub:'المس البالون',mode:'tap',target:'🎈',count:8},
+{id:'wash',cat:'life',icon:'🚗',title:'غسيل السيارة',sub:'نظف البقع',mode:'tap',target:'🟤',count:7,bg:'wash'}
+];
+function q(text,emoji,answers,correct){return{text,emoji,answers,correct}}
+const shows=[
+['🌈','الألوان حولنا','شاهد الألوان وابحث عنها في البيت.'],['🚀','رحلة إلى الفضاء','قصة قصيرة عن النجوم والكواكب.'],['🐾','أصدقاء الحيوانات','تعرف على حيوانات مختلفة.'],['😊','مشاعري اليوم','نتعلم كيف نسمي مشاعرنا.'],['♻️','كوكبنا الجميل','لماذا نعيد التدوير؟'],['🎵','وقت الأغنية','أصوات وإيقاع وحركة.']
+];
+const family=[['🔎','صيد الألوان','ابحثوا معًا عن 3 أشياء برتقالية.'],['🥪','مطبخ صغير','جهزوا وجبة خفيفة معًا.'],['🧘','تمدد عائلي','3 حركات بسيطة معًا.'],['🧹','تحدي الترتيب','رتبوا 5 ألعاب قبل انتهاء العد.'],['🎭','قصة وتمثيل','اختاروا حيوانًا وقلدوا حركته.'],['🎶','فرقة البيت','اصنعوا إيقاعًا بالتصفيق.']];
+const lessons=[
+{id:'L1',icon:'🔤',title:'الحروف الأولى',desc:'أ، ب، ت + تتبع وصوت',games:['letters','letterSound','trace']},
+{id:'L2',icon:'🔢',title:'أرقام وأشكال',desc:'عد، رقم، شكل، حجم',games:['count','number','shapes','sizes']},
+{id:'L3',icon:'🌱',title:'العالم حولي',desc:'حيوان، نبتة، طقس، حواس',games:['animals','plants','weather','senses']},
+{id:'L4',icon:'💛',title:'أنا وصديقي',desc:'مشاعر، مشاركة، مساعدة',games:['feelings','kindness','pet']}
+];
+function starsFor(id){return state.scores[id]||0}
+function award(id,n=3){state.stars+=n;state.plays++;state.scores[id]=Math.max(starsFor(id),n);state.recent=[id,...state.recent.filter(x=>x!==id)].slice(0,8);save();success();toast(`⭐ +${n}`)}
+function topbar(){return `<header class="top"><div class="logo"><span class="logoMark">🧢👓</span><span>نادي الفضول</span></div><div class="topActions"><button class="round" id="sound">${state.sound?'🔊':'🔇'}</button><button class="round" id="explore">🔎</button></div></header>`}
+function bottom(tab='play'){return `<nav class="bottom"><button class="nav ${tab==='play'?'on':''}" data-tab="play"><span>🎮</span>العب</button><button class="nav ${tab==='theater'?'on
