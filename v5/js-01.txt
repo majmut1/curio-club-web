@@ -1,0 +1,33 @@
+const $=s=>document.querySelector(s);const app=document.getElementById('app');
+const SAVE='curioClubV5';
+const defaultState={stars:0,plays:0,recent:[],favorites:[],scores:{},lesson:{},sound:true,daily:0};
+let state;try{state={...defaultState,...JSON.parse(localStorage.getItem(SAVE)||'{}')}}catch{state={...defaultState}};
+const save=()=>localStorage.setItem(SAVE,JSON.stringify(state));
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
+function speak(t){if(!state.sound||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ar-KW';u.rate=.9;u.pitch=1.08;speechSynthesis.speak(u)}
+function beep(f=560,d=.08){try{const A=new (window.AudioContext||window.webkitAudioContext)(),o=A.createOscillator(),g=A.createGain();o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(A.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,A.currentTime+d);o.stop(A.currentTime+d)}catch{}}
+function success(){beep(760,.1);setTimeout(()=>beep(980,.12),80)}function wrong(){beep(220,.13)}
+const cats={
+  basics:['أساسيات','🌈'],literacy:['الحروف واللغة','🔤'],math:['الرياضيات','🔢'],science:['العلوم','🔬'],life:['مهارات الحياة','🧼'],engineering:['الهندسة','🛠️'],tech:['التقنية','🤖'],music:['الموسيقى والفن','🎨'],sel:['المشاعر','💛'],move:['الحركة','🤸'],world:['العالم','🌍'],logic:['المنطق','🧩']
+};
+const G=[
+{id:'colors',cat:'basics',icon:'🎨',title:'الألوان',sub:'اختر اللون',mode:'quiz',rounds:[q('أين اللون الأحمر؟','🔴',['🔴','🔵','🟢'],0),q('أين اللون الأزرق؟','🔵',['🟡','🔵','🟠'],1),q('أين اللون الأخضر؟','🟢',['🟢','🟣','🔴'],0)]},
+{id:'shapes',cat:'basics',icon:'🔺',title:'الأشكال',sub:'دائرة ومربع',mode:'quiz',rounds:[q('اختر الدائرة','⚪',['⚪','🔺','⬛'],0),q('اختر المثلث','🔺',['⬛','🔺','⚪'],1),q('اختر المربع','⬛',['⚪','⬛','🔺'],1)]},
+{id:'sizes',cat:'basics',icon:'🐘',title:'كبير وصغير',sub:'اختر الكبير',mode:'quiz',rounds:[q('أي واحد أكبر؟','🐘',['🐘','🐭'],0),q('أي واحد أصغر؟','🚚',['🚚','🚗'],1),q('أي واحد أكبر؟','🍉',['🍒','🍉'],1)]},
+{id:'count',cat:'math',icon:'🍎',title:'العد',sub:'كم العدد؟',mode:'quiz',rounds:[q('كم تفاحة؟','🍎 🍎',['١','٢','٣'],1),q('كم نجمة؟','⭐ ⭐ ⭐',['٢','٣','٤'],1),q('كم بطة؟','🦆 🦆 🦆 🦆',['٣','٤','٥'],1)]},
+{id:'number',cat:'math',icon:'3️⃣',title:'اختر الرقم',sub:'١ ٢ ٣',mode:'quiz',rounds:[q('اختر الرقم ١','1️⃣',['1️⃣','2️⃣','3️⃣'],0),q('اختر الرقم ٢','2️⃣',['3️⃣','2️⃣','1️⃣'],1),q('اختر الرقم ٣','3️⃣',['1️⃣','3️⃣','2️⃣'],1)]},
+{id:'pattern',cat:'logic',icon:'🟣',title:'أكمل النمط',sub:'ماذا يأتي؟',mode:'quiz',rounds:[q('🔴 🔵 🔴 🔵 ...','❓',['🔴','🟢','🟡'],0),q('⭐ 🌙 ⭐ 🌙 ...','❓',['🌙','⭐','☀️'],1),q('🍎 🍎 🍌 🍎 🍎 ...','❓',['🍌','🍎','🍇'],0)]},
+{id:'memory',cat:'logic',icon:'🧠',title:'الذاكرة',sub:'طابق الصور',mode:'memory'},
+{id:'letters',cat:'literacy',icon:'أ',title:'الحروف',sub:'ابحث عن الحرف',mode:'quiz',rounds:[q('اختر حرف أ','أ',['أ','ب','ت'],0),q('اختر حرف ب','ب',['ت','ب','أ'],1),q('اختر حرف ت','ت',['ب','أ','ت'],2)]},
+{id:'letterSound',cat:'literacy',icon:'🔊',title:'صوت الحرف',sub:'حرف وصورة',mode:'quiz',rounds:[q('أي صورة تبدأ بـ ب؟','ب',['🐼 باندا','🦁 أسد','🐟 سمكة'],0),q('أي صورة تبدأ بـ س؟','س',['🍎 تفاحة','🐟 سمكة','🐰 أرنب'],1),q('أي صورة تبدأ بـ ت؟','ت',['🍎 تفاحة','🐘 فيل','🦆 بطة'],0)]},
+{id:'trace',cat:'literacy',icon:'✍️',title:'تتبع الحرف',sub:'ارسم أ',mode:'trace'},
+{id:'animals',cat:'science',icon:'🦁',title:'الحيوانات',sub:'من هذا؟',mode:'quiz',rounds:[q('أين الأسد؟','🦁',['🦁','🐘','🐼'],0),q('أين الفيل؟','🐘',['🐰','🐘','🐢'],1),q('أين السمكة؟','🐟',['🦆','🐟','🐶'],1)]},
+{id:'habitats',cat:'science',icon:'🏡',title:'بيوت الحيوانات',sub:'أين يعيش؟',mode:'quiz',rounds:[q('أين تعيش السمكة؟','🐟',['🌊 البحر','🌳 الشجرة','🏠 البيت'],0),q('أين يعيش الجمل؟','🐪',['❄️ الثلج','🏜️ الصحراء','🌊 البحر'],1),q('أين يعيش الدب القطبي؟','🐻‍❄️',['❄️ الثلج','🏜️ الصحراء','🌴 الغابة'],0)]},
+{id:'senses',cat:'science',icon:'👃',title:'الحواس',sub:'شم واسمع',mode:'quiz',rounds:[q('بماذا نشم؟','🌸',['👃 الأنف','👂 الأذن','👀 العين'],0),q('بماذا نسمع؟','🎵',['👀 العين','👂 الأذن','👃 الأنف'],1),q('بماذا نرى؟','🌈',['👀 العين','👃 الأنف','👅 اللسان'],0)]},
+{id:'plants',cat:'science',icon:'🌱',title:'نعتني بالنبتة',sub:'ماذا تحتاج؟',mode:'quiz',rounds:[q('النبتة عطشانة. ماذا نعطيها؟','🌱',['💧 ماء','🧸 لعبة','🍪 بسكويت'],0),q('النبتة تحتاج ضوءًا','🌻',['☀️ شمس','🌙 ظلام','🧊 ثلج'],0),q('أي واحد نبات؟','❓',['🌷','🚗','⚽'],0)]},
+{id:'dino',cat:'science',icon:'🦴',title:'حفر الدينو',sub:'ابحث عن العظام',mode:'tap',target:'🦴',count:6,bg:'dig'},
+{id:'planets',cat:'science',icon:'🪐',title:'الفضاء',sub:'كواكب ونجوم',mode:'quiz',rounds:[q('أين كوكب الأرض؟','🌍',['🌍','⭐','🌙'],0),q('أين القمر؟','🌙',['☀️','🌙','🪐'],1),q('أين النجم؟','⭐',['🌎','⭐','🚀'],1)]},
+{id:'sink',cat:'science',icon:'🛁',title:'يطفو أم يغرق',sub:'جرّب وتوقع',mode:'quiz',rounds:[q('هل البطة تطفو أم تغرق؟','🦆',['يطفو 🌊','يغرق ⬇️'],0),q('هل الصخرة تطفو أم تغرق؟','🪨',['يطفو 🌊','يغرق ⬇️'],1),q('هل الإسفنجة تطفو أم تغرق؟','🧽',['يطفو 🌊','يغرق ⬇️'],0)]},
+{id:'bug',cat:'science',icon:'🐞',title:'صائد الحشرات',sub:'المس الحشرة',mode:'tap',target:'🐞',count:7},
+{id:'desert',cat:'world',icon:'🏜️',title:'الصحراء',sub:'أشياء الصحراء',mode:'quiz',rounds:[q('ماذا نرى في الصحراء؟','🏜️',['🐪 جمل','🐧 بطريق','🐳 حوت'],0),q('اختر نبات الصحراء','🌵',['🌵 صبار','🌲 صنوبر','🌷 زهرة'],0),q('الصحراء عادة...','☀️',['حارة','ثلجية'],0)]},
+{id:'weather',cat:'life',icon:'🌦️',title:'الطقس والملابس',sub:'ماذا نلبس؟',mode:'quiz',rounds:[q('الجو ممطر. ماذا نلبس؟','🌧️',['🧥 معطف','🩱 ملابس سباحة','🩴 شبشب'],0),q('الجو مشمس وحار','☀️',
