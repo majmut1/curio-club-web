@@ -3,45 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-  <meta name="theme-color" content="#12bdf5">
+  <meta name="theme-color" content="#111a5c">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="نادي الفضول">
+  <link rel="manifest" href="manifest.webmanifest?v=5">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5">
   <link rel="icon" type="image/png" href="apple-touch-icon.png?v=5">
   <title>نادي الفضول</title>
-  <style>html,body{margin:0;min-height:100%;background:#11b8ef;font-family:system-ui,sans-serif;color:#fff}body{display:grid;place-items:center}.loading{text-align:center;font-weight:900;padding:24px}.spin{font-size:60px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-10px)}}</style>
+  <style>
+    html,body{margin:0;min-height:100%;background:#111a5c;font-family:system-ui,sans-serif;color:#fff}
+    body{display:grid;place-items:center}.loading{text-align:center;font-weight:900;padding:28px}.spin{font-size:62px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-9px)}}
+  </style>
 </head>
 <body>
-  <div class="loading"><div class="spin">🧢👓</div><p>جاري تشغيل اللعبة…</p></div>
+  <div class="loading" id="boot"><div class="spin">🧢👓</div><h2>نادي الفضول V5</h2><p>جاري تجهيز الألعاب…</p></div>
   <script>
   (async()=>{
-    const files=[
-      'bundle/g4-01-1.b64','bundle/g4-01-2.b64','bundle/g4-01-3.b64','bundle/g4-01-4.b64',
-      'bundle/g4-02-1.b64','bundle/g4-02-2.b64','bundle/g4-02-3.b64','bundle/g4-02-4.b64',
-      'bundle/g4-03-1.b64','bundle/g4-03-2.b64','bundle/g4-03-3.b64','bundle/g4-03-4.b64'
-    ];
-    const parts=[];
-    for(const file of files){
-      const response=await fetch(file+'?v=4fix2',{cache:'no-store'});
-      if(!response.ok) throw new Error(`تعذر تحميل ${file}`);
-      parts.push(await response.text());
+    const cssFiles=['v5/css-01.txt','v5/css-02.txt'];
+    const jsFiles=['v5/js-01.txt','v5/js-02.txt','v5/js-03.txt','v5/js-04.txt','v5/js-05.txt','v5/js-06.txt'];
+    async function load(files){
+      const out=[];
+      for(const file of files){
+        const r=await fetch(file+'?v=5.0.0',{cache:'no-store'});
+        if(!r.ok) throw new Error('تعذر تحميل '+file+' ('+r.status+')');
+        out.push(await r.text());
+      }
+      return out.join('');
     }
-    const joined=parts.join('').replace(/\s+/g,'');
-    const binary=atob(joined);
-    const bytes=new Uint8Array(binary.length);
-    for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
-    if(!('DecompressionStream' in window)) throw new Error('حدّث المتصفح لتشغيل اللعبة.');
-    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-    const html=await new Response(stream).text();
-    document.open();
-    document.write(html);
-    document.close();
+    const [css,js]=await Promise.all([load(cssFiles),load(jsFiles)]);
+    if(css.length<10000||js.length<30000) throw new Error('ملفات V5 غير مكتملة');
+    const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);
+    document.body.innerHTML='<div id="app"></div><div id="toast" class="toast"></div>';
+    const script=document.createElement('script');script.textContent=js;document.body.appendChild(script);
   })().catch(error=>{
-    document.body.innerHTML=`<div class="loading"><h1>تعذر تشغيل اللعبة</h1><p>${error.message}</p></div>`;
+    document.body.innerHTML='<div class="loading"><div class="spin">🛠️</div><h1>تعذر تشغيل اللعبة</h1><p>'+error.message+'</p><button onclick="location.reload()" style="font:inherit;font-weight:900;padding:12px 20px;border:0;border-radius:16px">إعادة المحاولة</button></div>';
     console.error(error);
   });
   </script>
-  <!-- Curio Club V4 repaired publish + home-screen icon -->
 </body>
 </html>
