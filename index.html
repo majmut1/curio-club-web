@@ -11,13 +11,19 @@
   <div class="loading"><div class="spin">🧢👓</div><p>جاري تشغيل اللعبة…</p></div>
   <script>
   (async()=>{
-    const files=['bundle/g4-01.b64','bundle/g4-02.b64','bundle/g4-03-1.b64','bundle/g4-03-2.b64','bundle/g4-03-3.b64','bundle/g4-03-4.b64'];
-    const parts=await Promise.all(files.map(async file=>{
-      const response=await fetch(file,{cache:'no-store'});
+    const files=[
+      'bundle/g4-01-1.b64','bundle/g4-01-2.b64','bundle/g4-01-3.b64','bundle/g4-01-4.b64',
+      'bundle/g4-02-1.b64','bundle/g4-02-2.b64','bundle/g4-02-3.b64','bundle/g4-02-4.b64',
+      'bundle/g4-03-1.b64','bundle/g4-03-2.b64','bundle/g4-03-3.b64','bundle/g4-03-4.b64'
+    ];
+    const parts=[];
+    for(const file of files){
+      const response=await fetch(file+'?v=4fix2',{cache:'no-store'});
       if(!response.ok) throw new Error(`تعذر تحميل ${file}`);
-      return response.text();
-    }));
-    const binary=atob(parts.join('').replace(/\s+/g,''));
+      parts.push(await response.text());
+    }
+    const joined=parts.join('').replace(/\s+/g,'');
+    const binary=atob(joined);
     const bytes=new Uint8Array(binary.length);
     for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
     if(!('DecompressionStream' in window)) throw new Error('حدّث المتصفح لتشغيل اللعبة.');
@@ -31,6 +37,6 @@
     console.error(error);
   });
   </script>
-  <!-- Curio Club V4 Arabic preschool publish -->
+  <!-- Curio Club V4 repaired publish -->
 </body>
 </html>
