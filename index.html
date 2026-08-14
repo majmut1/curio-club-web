@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#12bdf5">
+  <title>Curio Club Web Game</title>
+  <style>html,body{margin:0;min-height:100%;background:#11b8ef;font-family:system-ui,sans-serif;color:#fff}body{display:grid;place-items:center}.loading{text-align:center;font-weight:800}.spin{font-size:52px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-10px)}}</style>
+</head>
+<body>
+  <div class="loading"><div class="spin">🔎</div><p>Loading Curio Club…</p></div>
+  <script>
+  (async()=>{
+    const files=['bundle/part1.txt','bundle/part2.txt','bundle/part3.txt','bundle/part4.txt'];
+    const parts=await Promise.all(files.map(async file=>{
+      const response=await fetch(file,{cache:'no-store'});
+      if(!response.ok) throw new Error(`Failed to load ${file}: ${response.status}`);
+      return response.text();
+    }));
+    document.open();
+    document.write(parts.join(''));
+    document.close();
+  })().catch(error=>{
+    document.body.innerHTML=`<div class="loading"><h1>Could not load the game</h1><p>${error.message}</p></div>`;
+    console.error(error);
+  });
+  </script>
+</body>
+</html>
