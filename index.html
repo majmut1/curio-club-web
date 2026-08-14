@@ -1,36 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#12bdf5">
-  <title>Curio Club Web Game</title>
+  <title>نادي الفضول</title>
   <style>html,body{margin:0;min-height:100%;background:#11b8ef;font-family:system-ui,sans-serif;color:#fff}body{display:grid;place-items:center}.loading{text-align:center;font-weight:900;padding:24px}.spin{font-size:60px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-10px)}}</style>
 </head>
 <body>
-  <div class="loading"><div class="spin">🧡</div><p>Loading…</p></div>
+  <div class="loading"><div class="spin">🧢👓</div><p>جاري تشغيل اللعبة…</p></div>
   <script>
   (async()=>{
-    const files=['bundle/g2-01.b64','bundle/g2-02.b64','bundle/g2-03.b64'];
+    const files=['bundle/g3-01.b64','bundle/g3-02.b64','bundle/g3-03.b64'];
     const parts=await Promise.all(files.map(async file=>{
       const response=await fetch(file,{cache:'no-store'});
-      if(!response.ok) throw new Error(`Failed to load ${file}: ${response.status}`);
+      if(!response.ok) throw new Error(`تعذر تحميل ${file}`);
       return response.text();
     }));
     const binary=atob(parts.join('').replace(/\s+/g,''));
     const bytes=new Uint8Array(binary.length);
     for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
-    if(!('DecompressionStream' in window)) throw new Error('This browser needs a newer version.');
+    if(!('DecompressionStream' in window)) throw new Error('حدّث المتصفح لتشغيل اللعبة.');
     const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
     const html=await new Response(stream).text();
     document.open();
     document.write(html);
     document.close();
   })().catch(error=>{
-    document.body.innerHTML=`<div class="loading"><h1>Could not load the game</h1><p>${error.message}</p></div>`;
+    document.body.innerHTML=`<div class="loading"><h1>تعذر تشغيل اللعبة</h1><p>${error.message}</p></div>`;
     console.error(error);
   });
   </script>
-  <!-- Curio Club V2 publish -->
+  <!-- Curio Club V3 Arabic publish -->
 </body>
 </html>
