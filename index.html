@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="نادي الفضول">
-  <link rel="manifest" href="manifest.webmanifest?v=7">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=7">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=7">
+  <link rel="manifest" href="manifest.webmanifest?v=8">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=8">
+  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=8">
   <title>نادي الفضول</title>
   <style>
     html,body{margin:0;min-height:100%;background:#111a5c;font-family:system-ui,sans-serif;color:#fff}
@@ -20,12 +20,12 @@
   <div class="loading" id="boot"><div class="spin">🧢👓</div><h2>نادي الفضول</h2><p>جاري تجهيز الألعاب…</p></div>
   <script>
   (async()=>{
-    const cssFiles=['v5/css-01.txt','v5/css-02.txt','v5/compact.css'];
-    const jsFiles=['v5/js-01.txt','v5/js-02.txt','v5/js-03.txt','v5/js-04.txt','v5/js-05.txt','v5/js-06.txt','v5/compact.js'];
+    const cssFiles=['v5/css-01.txt','v5/css-02.txt','v5/compact.css','v5/mascot.css'];
+    const jsFiles=['v5/js-01.txt','v5/js-02.txt','v5/js-03.txt','v5/js-04.txt','v5/js-05.txt','v5/js-06.txt','v5/compact.js','v5/mascot.js'];
     async function load(files){
       const out=[];
       for(const file of files){
-        const r=await fetch(file+'?v=5.1.1',{cache:'no-store'});
+        const r=await fetch(file+'?v=5.2.0',{cache:'no-store'});
         if(!r.ok) throw new Error('تعذر تحميل '+file+' ('+r.status+')');
         out.push(await r.text());
       }
