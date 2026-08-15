@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="نادي الفضول">
-  <link rel="manifest" href="manifest.webmanifest?v=5">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=5">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=6">
+  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=6">
   <title>نادي الفضول</title>
   <style>
     html,body{margin:0;min-height:100%;background:#111a5c;font-family:system-ui,sans-serif;color:#fff}
@@ -17,22 +17,22 @@
   </style>
 </head>
 <body>
-  <div class="loading" id="boot"><div class="spin">🧢👓</div><h2>نادي الفضول V5</h2><p>جاري تجهيز الألعاب…</p></div>
+  <div class="loading" id="boot"><div class="spin">🧢👓</div><h2>نادي الفضول</h2><p>جاري تجهيز الألعاب…</p></div>
   <script>
   (async()=>{
-    const cssFiles=['v5/css-01.txt','v5/css-02.txt'];
-    const jsFiles=['v5/js-01.txt','v5/js-02.txt','v5/js-03.txt','v5/js-04.txt','v5/js-05.txt','v5/js-06.txt'];
+    const cssFiles=['v5/css-01.txt','v5/css-02.txt','v5/compact.css'];
+    const jsFiles=['v5/js-01.txt','v5/js-02.txt','v5/js-03.txt','v5/js-04.txt','v5/js-05.txt','v5/js-06.txt','v5/compact.js'];
     async function load(files){
       const out=[];
       for(const file of files){
-        const r=await fetch(file+'?v=5.0.0',{cache:'no-store'});
+        const r=await fetch(file+'?v=5.1.0',{cache:'no-store'});
         if(!r.ok) throw new Error('تعذر تحميل '+file+' ('+r.status+')');
         out.push(await r.text());
       }
-      return out.join('');
+      return out.join('\n');
     }
     const [css,js]=await Promise.all([load(cssFiles),load(jsFiles)]);
-    if(css.length<10000||js.length<30000) throw new Error('ملفات V5 غير مكتملة');
+    if(css.length<12000||js.length<32000) throw new Error('ملفات اللعبة غير مكتملة');
     const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);
     document.body.innerHTML='<div id="app"></div><div id="toast" class="toast"></div>';
     const script=document.createElement('script');script.textContent=js;document.body.appendChild(script);
