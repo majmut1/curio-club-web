@@ -2,11 +2,12 @@
   "name": "نادي الفضول",
   "short_name": "نادي الفضول",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#111a5c",
   "theme_color": "#111a5c",
-  "orientation": "any",
+  "orientation": "portrait-primary",
   "icons": [
-    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any"}
+    {"src": "apple-touch-icon.png?v=6", "sizes": "180x180", "type": "image/png", "purpose": "any"}
   ]
 }
