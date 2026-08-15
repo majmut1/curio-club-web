@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="نادي الفضول">
-  <link rel="manifest" href="manifest.webmanifest?v=6">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=6">
-  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=6">
+  <link rel="manifest" href="manifest.webmanifest?v=7">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=7">
+  <link rel="icon" type="image/png" href="apple-touch-icon.png?v=7">
   <title>نادي الفضول</title>
   <style>
     html,body{margin:0;min-height:100%;background:#111a5c;font-family:system-ui,sans-serif;color:#fff}
@@ -25,17 +25,20 @@
     async function load(files){
       const out=[];
       for(const file of files){
-        const r=await fetch(file+'?v=5.1.0',{cache:'no-store'});
+        const r=await fetch(file+'?v=5.1.1',{cache:'no-store'});
         if(!r.ok) throw new Error('تعذر تحميل '+file+' ('+r.status+')');
         out.push(await r.text());
       }
-      return out.join('\n');
+      return out.join('');
     }
     const [css,js]=await Promise.all([load(cssFiles),load(jsFiles)]);
     if(css.length<12000||js.length<32000) throw new Error('ملفات اللعبة غير مكتملة');
     const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);
     document.body.innerHTML='<div id="app"></div><div id="toast" class="toast"></div>';
-    const script=document.createElement('script');script.textContent=js;document.body.appendChild(script);
+    const script=document.createElement('script');
+    script.onerror=()=>{document.body.innerHTML='<div class="loading"><div class="spin">🛠️</div><h1>تعذر تشغيل اللعبة</h1><p>خطأ في ملفات اللعبة.</p></div>'};
+    script.textContent=js;
+    document.body.appendChild(script);
   })().catch(error=>{
     document.body.innerHTML='<div class="loading"><div class="spin">🛠️</div><h1>تعذر تشغيل اللعبة</h1><p>'+error.message+'</p><button onclick="location.reload()" style="font:inherit;font-weight:900;padding:12px 20px;border:0;border-radius:16px">إعادة المحاولة</button></div>';
     console.error(error);
